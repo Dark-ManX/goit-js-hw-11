@@ -95,4 +95,4 @@ module.exports=require("./lib/axios");
 },{"./createGallery":"Y94v","simplelightbox":"yx6k","notiflix":"cwzQ","axios":"dZBD"}],"Focm":[function(require,module,exports) {
 "use strict";require("./sass/main.scss"),require("./js/submitAndScrollFunc");
 },{"./sass/main.scss":"clu1","./js/submitAndScrollFunc":"q1cQ"}]},{},["Focm"], null)
-//# sourceMappingURL=/parcel-project-template/src.71aafe0a.js.map
+//# sourceMappingURL=/goit-js-hw-11/src.71aafe0a.js.map
