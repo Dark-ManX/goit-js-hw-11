@@ -1,8 +1,6 @@
 import { createGallery } from "./createGallery";
+import { fetchRes } from "./fetch";
 import simpleLightbox from "simplelightbox";
-import Notiflix from "notiflix";
-
-const axios = require("axios").default;
 
 export const refs = {
   form: document.querySelector(".search-form"),
@@ -11,18 +9,6 @@ export const refs = {
 
 let page;
 const countPerPage = 40;
-
-const fetchRes = async (name, page) => {
-  const URL = `https://pixabay.com/api/`;
-  try {
-    const response = await axios.get(
-      `${URL}?key=27564441-2bad7552450aa73f501c58b21&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&safesearch=true&page=${page}&per_page=${countPerPage}`
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error.message);
-  }
-};
 
 refs.form.addEventListener("submit", onSubmit);
 
@@ -34,7 +20,9 @@ async function onSubmit(e) {
 
     page = 1;
 
-    const request = e.currentTarget.elements.searchQuery.value;
+    const request = e.currentTarget.elements.searchQuery.value.trim();
+
+    if (request === "") return;
 
     let result = await fetchRes(request, page);
 
@@ -60,3 +48,8 @@ async function onSubmit(e) {
     console.log(error.message);
   }
 }
+
+export default {
+  page,
+  countPerPage,
+};
