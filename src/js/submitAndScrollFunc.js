@@ -2,13 +2,15 @@ import { createGallery } from "./createGallery";
 import { fetchRes } from "./fetch";
 import simpleLightbox from "simplelightbox";
 
+const throttle = require("lodash.throttle");
+
 export const refs = {
   form: document.querySelector(".search-form"),
   gallery: document.querySelector(".gallery"),
 };
 
 let page;
-const countPerPage = 40;
+export const countPerPage = 40;
 
 refs.form.addEventListener("submit", onSubmit);
 
@@ -30,20 +32,24 @@ async function onSubmit(e) {
 
     new simpleLightbox(".gallery a");
 
-    window.addEventListener("scroll", async () => {
-      const elHeight = document
-        .querySelector(".gallery")
-        .getBoundingClientRect();
+    window.addEventListener(
+      "scroll",
+      throttle(async () => {
+        const elHeight = document
+          .querySelector(".gallery")
+          .getBoundingClientRect();
 
-      if (
-        elHeight.bottom < document.documentElement.clientHeight + 150 &&
-        page < result.totalHits / countPerPage
-      ) {
-        page += 1;
-        result = await fetchRes(request, page);
-        return createGallery(result.hits);
-      }
-    });
+        if (
+          elHeight.bottom < document.documentElement.clientHeight * 2 &&
+          page < result.totalHits / countPerPage
+        ) {
+          page += 1;
+          result = await fetchRes(request, page);
+          console.log(result);
+          return createGallery(result.hits);
+        }
+      }, 1000)
+    );
   } catch (error) {
     console.log(error.message);
   }

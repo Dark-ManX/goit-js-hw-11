@@ -1,4 +1,4 @@
-import { page, countPerPage } from "./submitAndScrollFunc";
+import { countPerPage } from "./submitAndScrollFunc";
 import Notiflix from "notiflix";
 
 const axios = require("axios").default;
